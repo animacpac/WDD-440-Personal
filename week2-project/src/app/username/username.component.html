@@ -1,0 +1,12 @@
+<hr>
+<hr>
+
+<label>Username</label>
+<!-- <input type="text" class="form-control" (input)="onUpdateServerName($event)"> -->
+<input type="text" class="form-control"[(ngModel)]="username">
+<p>{{ username }}</p>
+<button class="btn btn-primary" [disabled]="username === ''" (click)="onCreateUsername()">Create</button>
+<!-- <p [innerText]="allowNewServer"></p> -->
+<p>{{ usernameCreationStatus }}</p>
+<button class="btn btn-primary" [disabled]="username === ''" (click)="username = ''">Clear</button>
+<hr>
