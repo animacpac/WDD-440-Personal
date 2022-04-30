@@ -9,6 +9,13 @@
             <h5><app-warning-alert></app-warning-alert></h5>
             <!--<div app-servers></div> -->
             <!--<div class="app-servers"></div> -->
+            <!-- <button class="btn btn-primary" (click)="showSecret = !showSecret">Display Details</button>
+            <p *ngIf="showSecret">Secret Password = tuna</p> -->
+            <button class="btn btn-primary" (click)="onToggleDetails()">Display Details</button>
+            <p *ngIf="showSecret">Secret Password = tuna</p>
+            <div *ngFor="let logItem of log; let i = index" 
+                [ngStyle]="{backgroundColor: logItem >= 4 ? 'blue' : 'transparent'}"
+                [ngClass]="{'white-text': logItem >= 4}">{{ logItem }}</div>
         </div>
     </div>
 </div>
