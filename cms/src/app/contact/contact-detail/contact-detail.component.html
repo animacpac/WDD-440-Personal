@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="list-group-item clearfix" *ngFor="let contacts of contact">
+            <h3>{{ contacts.name }}</h3>
+            <img src="{{ contacts.imageUrl }}" alt="{{ contacts.id }}" class="img-responsive" style="max-height: 50px;">
+            <span style="display: flex; justify-content: flex-end;">
+                <button class="btn btn-primary" type="button">Edit</button>
+                <button class="btn btn-danger" type="button">Delete</button>
+            </span>
+            <ul style="list-style: none; padding: 0px">
+                <li><strong>Email:</strong> {{ contacts.email }}</li>
+                <li><strong>Phone:</strong> {{ contacts.phone }}</li>
+            </ul>
+        </div>
+
+    </div>
+   
+    <div class="panel-body">
+       <div *ngFor="let contacts of contact">
+        
+       </div>
+    </div>
+</div>
