@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   loadedFeature = 'contact'
 
-  title = 'cms';
+  // title = 'cms';
   onNavigate(feature: string){
     this.loadedFeature = feature;
   }

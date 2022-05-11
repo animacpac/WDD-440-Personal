@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <app-contact *ngIf="loadedFeature === 'contact'"></app-contact>
+        <app-contact-list *ngIf="loadedFeature !== 'contact'"></app-contact-list>
        
       </div>
     </div>

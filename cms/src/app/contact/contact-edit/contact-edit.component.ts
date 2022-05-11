@@ -7,7 +7,7 @@ import {
   Output
 } from '@angular/core';
 
-import { Ingredient } from 'src/app/shared/ingredient.mode';
+import { ContactDesc } from 'src/app/shared/contactdesc.model';
 import { Contact } from '../contact.model';
 
 @Component({
@@ -17,8 +17,8 @@ import { Contact } from '../contact.model';
 })
 export class ContactEditComponent implements OnInit {
     @ViewChild('nameInput', { static: false }) nameInputRef!: ElementRef;
-    @ViewChild('amountInput', { static: false }) amountInputRef!: ElementRef;
-    @Output() ingredientAdded = new EventEmitter<Ingredient>();
+    @ViewChild('emailInput', { static: false }) emailInputRef!: ElementRef;
+    @Output() ContactDescAdded = new EventEmitter<ContactDesc>();
   
 
   originalContact!: Contact;
@@ -32,10 +32,10 @@ export class ContactEditComponent implements OnInit {
   ngOnInit(): void {
   }
   onAddItem() {
-    const ingName = this.nameInputRef.nativeElement.value;
-    const ingAmount = this.amountInputRef.nativeElement.value;
-    const newIngredient = new Ingredient(ingName, ingAmount);
-    this.ingredientAdded.emit(newIngredient);
+    const cntName = this.nameInputRef.nativeElement.value;
+    const emaildesc = this.emailInputRef.nativeElement.value;
+    const newContactDesc = new ContactDesc(cntName, emaildesc);
+    this.ContactDescAdded.emit(newContactDesc);
   }
 
 
