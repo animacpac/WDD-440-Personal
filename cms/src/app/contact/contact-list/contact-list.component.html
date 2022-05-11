@@ -6,5 +6,9 @@
 <hr>
 <div class="row">
   <div class="col-xs-12">
-    <app-contact-item></app-contact-item>
+    <app-contact-item
+      *ngFor="let contactEL of contact"
+      [contact]="contactEL"
+      (contactSelected)="onContactSelected(contactEL)"></app-contact-item>
+  </div>
 </div>
