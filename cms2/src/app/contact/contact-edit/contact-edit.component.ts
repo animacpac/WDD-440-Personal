@@ -16,6 +16,11 @@ import { Contact } from '../contact.model';
   styleUrls: ['./contact-edit.component.css']
 })
 export class ContactEditComponent implements OnInit {
+    @ViewChild('nameInput', { static: false }) nameInputRef!: ElementRef;
+    @ViewChild('amountInput', { static: false }) amountInputRef!: ElementRef;
+    @Output() ingredientAdded = new EventEmitter<Ingredient>();
+  
+
   originalContact!: Contact;
   contact!: Contact;
   groupContacts: Contact[] = [];
@@ -26,5 +31,12 @@ export class ContactEditComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  onAddItem() {
+    const ingName = this.nameInputRef.nativeElement.value;
+    const ingAmount = this.amountInputRef.nativeElement.value;
+    const newIngredient = new Ingredient(ingName, ingAmount);
+    this.ingredientAdded.emit(newIngredient);
+  }
+
 
 }
