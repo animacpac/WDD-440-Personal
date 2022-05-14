@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+
+
+
+
 
 @Component({
   selector: 'app-root',
@@ -8,8 +12,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   loadedFeature = 'contact'
 
-  // title = 'cms';
+   title = 'cms';
   onNavigate(feature: string){
     this.loadedFeature = feature;
   }
+ 
 }
+

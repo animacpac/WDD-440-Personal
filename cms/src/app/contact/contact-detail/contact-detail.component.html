@@ -1,40 +1,36 @@
-<div class="row">
-    <div class="col-xs-12">
-        <img
-            [src]="contact.imageUrl"
-            alt="{{ contact.name }}"
-            class="img-responsive"
-            style="max-height: 300px;">
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-      <h1>{{ contact.name }}</h1>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-primary dropdown-toggle">
-          Manage Contact <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#">To Contact List</a></li>
-          <li><a href="#">Edit Contact</a></li>
-          <li><a href="#">Delete Contact</a></li>
-        </ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <div class="row">
+          <div class="col-xs-12">
+              <h3>{{contact.name}}</h3>
+          </div>
       </div>
-    </div>
+      <div class="row">
+          <div class="col-md-6">
+              <img [src] = "contact.imageUrl" alt="picture of {{contact.name}}" class="img-responsive" style="max-height: 300px;">
+          </div>
+          <div class="col-md-3" style="margin-top: 50px; margin-left:0px;">
+                  <button type="button" class="btn btn-primary ">Edit</button>
+          </div>
+          <div class="col-md-3" style="margin-top: 50px; margin-left:0px;">
+              <div class="btn-group">
+                  <button type="button" class="btn btn-danger">Delete</button>
+              </div>
+          </div>
+      </div>
+
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      {{ contact.email }}
-    </div>
+  <div class="panel-body">
+      <div class="row">
+          <div class="col-xs-12">
+              <p>Email: {{contact.email}} </p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12">
+              <p>Phone: {{contact.phone}}</p>
+          </div>
+      </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      Contacts
-    </div>
-  </div>
+  
+</div>
