@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Document } from './document.model';
-import { DocumentService } from './documents.service';
+
 
 @Component({
   selector: 'app-documents',
@@ -10,14 +10,10 @@ import { DocumentService } from './documents.service';
 export class DocumentsComponent implements OnInit {
   selectedDocument!: Document;
 
-  constructor(private documentService: DocumentService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.documentService.documentSelectedEvent.subscribe(
-      (document: Document) => {
-        this.selectedDocument = document;
-      }
-    );
+ 
   }
 
 
