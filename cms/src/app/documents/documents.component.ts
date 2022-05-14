@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Document } from './document.model';
 
 
@@ -8,7 +8,7 @@ import { Document } from './document.model';
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  selectedDocument!: Document;
+  @Input() selectedDocument!: Document;
 
   constructor() { }
 

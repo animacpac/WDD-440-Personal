@@ -6,9 +6,14 @@
     </div>
   </div>
   <div class="panel-body">
-    <div class="center-panel">
-      <cms-document-item></cms-document-item>
-    </div>
+    <div class="panel-body">
+      <div class="center-panel">
+        <cms-document-item
+        *ngFor ='let documentEL of documents'
+        [document] = "documentEL"
+        (documentSelected) = "onSelectedDocument(documentEL)">
+      </cms-document-item>
+      </div>
   </div>
 
 </div>
