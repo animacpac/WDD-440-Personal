@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { Message } from '../messages.model';
+import { MessageService } from '../message.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class MessageEditComponent implements OnInit {
   @Output() addMessageEvent = new EventEmitter<Message>();
   currentSender = "Cameron Fuller";
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -21,13 +22,16 @@ export class MessageEditComponent implements OnInit {
     const msgSubject = this.subjectRef.nativeElement.value;
     const msgText = this.msgTextRef.nativeElement.value;
     const newMessage = new Message(1, msgSubject, msgText, this.currentSender);
-    this.addMessageEvent.emit(newMessage);
+
+    this.messageService.addMessage(newMessage);
+    this.subjectRef.nativeElement.value = '';
+    this.msgTextRef.nativeElement.value = '';
+   
+    this.onClear();
 
   }
   onClear() {
-    const msgSubject = this.subjectRef.nativeElement.value;
-    const msgText = this.msgTextRef.nativeElement.value;
-    console.log(new Message(1, msgSubject, msgText, this.currentSender))
+
     this.subjectRef.nativeElement.value = "";
     this.msgTextRef.nativeElement.value = "";
   }
