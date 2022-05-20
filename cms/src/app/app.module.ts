@@ -17,6 +17,8 @@ import { DocumentListComponent } from './documents/document-list/document-list.c
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { MessageItemComponent } from './messages/message-item/message-item.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
+import { AppRoutingModule } from './app-routing.module';
+
 
 
 @NgModule({
@@ -40,9 +42,11 @@ import { MessageListComponent } from './messages/message-list/message-list.compo
 
   ],
   imports: [
-    BrowserModule
+    AppRoutingModule,
+    BrowserModule,
   ],
   providers: [],
+  exports:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
