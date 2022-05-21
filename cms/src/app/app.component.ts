@@ -1,21 +1,16 @@
 import { Component, NgModule } from '@angular/core';
 
-
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'cms';
   loadedFeature = 'contact'
-
-   title = 'cms';
-  onNavigate(feature: string){
+  onNavigate(feature: string) {
     this.loadedFeature = feature;
   }
- 
+
 }
 
