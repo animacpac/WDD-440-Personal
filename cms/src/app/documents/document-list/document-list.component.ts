@@ -1,27 +1,27 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { Document } from '../document.model';
+import { DocumentService } from '../document.service';
 
 @Component({
   selector: 'cms-document-list',
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.css']
 })
+
+
 export class DocumentListComponent implements OnInit {
-  @Output()  selectedDocumentEvent = new EventEmitter<Document>();
-  documents:Document[] = [
-    new Document(1, "Valter1", "Some File", "facebook.com", "vale"),
-    new Document(2, "Valter2", "Teting file", "byui.com", "Vicky"),
-    new Document(3, "Valter3", "What File", "canvas.com", "vale"),
-    new Document(4, "Valter4", "Vegita", "github.com", "vale"),
+  // @Output()  selectedDocumentEvent = new EventEmitter<Document>();
+  subscription!: Subscription;
+  document: Document[] = [];
 
-  ];
+  constructor(private documentService: DocumentService) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.document = this.documentService.getDocuments();
   }
-  onSelectedDocument(document:Document){
-    this.selectedDocumentEvent.emit(document)
+  onSelectedDocument(){
+    
   }
 
 }
