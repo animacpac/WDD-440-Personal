@@ -1,20 +1,17 @@
 <div class="panel panel-default">
-  <div class="panel-heading" style="display:flex; flex-direction:row;">
-      <div class="col-md-9">
-          <h2>Contacts</h2>
-      </div>
-      <div style="margin: 15px;">
-          <a href="#" class="btn btn-success">New Contact</a>
-      </div>
-      </div>
-  <div class="panel-body">
-      <div class="row">
-          <div class="col-xs-12">
-             <app-contact-item
-             *ngFor ='let contactEl of contact'
-             [contact] = "contactEl"
-             ></app-contact-item>
-          </div>
-      </div>
-  </div>
+    <div class="panel-heading" style="display:flex; flex-direction:row;">
+        <div class="col-md-9">
+            <h2>Contacts</h2>
+        </div>
+        <div style="margin: 15px;">
+            <a class="btn btn-success" [routerLink]='["new"]'>New Contact</a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <app-contact-item *ngFor='let contactEl of contact' [contact]="contactEl"></app-contact-item>
+            </div>
+        </div>
+    </div>
 </div>

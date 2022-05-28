@@ -3,14 +3,11 @@
         <!--Add tag to load the DocumentListComponent here-->
         <cms-document-list></cms-document-list>
     </div>
-  
+
     <div class="col-md-4">
-       <cms-document-detail
-       *ngIf="selectedDocument ; else infoText" [document] = "selectedDocument"></cms-document-detail>
+        <router-outlet></router-outlet>
         <ng-template #infoText>
             <p>Please Select a Document</p>
         </ng-template>
-        
-       
     </div>
 </div>

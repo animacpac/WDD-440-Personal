@@ -15,8 +15,6 @@ export class DocumentItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSelected(){
-    this.documentService.documentSelectedEvent.emit(this.document);
-  }
+
 
 }
