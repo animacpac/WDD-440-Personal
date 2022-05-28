@@ -26,8 +26,6 @@ export class DocumentListComponent implements OnInit {
       }
     );
   }
-  onSelectedDocument(){
-    
-  }
+ 
 
 }
