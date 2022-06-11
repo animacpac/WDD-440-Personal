@@ -16,6 +16,9 @@
             max="120">
         </div>
       </div>
+      <div class="alert alert-danger" *ngIf="!name.valid && name.touched">
+        Please enter a name.
+      </div>
 
 
       <div class="row">
@@ -28,12 +31,15 @@
             name="email"
             [ngModel]="contact?.email"
             #email="ngModel"
+            required
             size="120"
             max="255">
         </div>
       </div>
 
-      <div class="alert alert-danger" *ngIf="email.touched && email.invalid">Please enter a valid email address.</div>
+      <div class="alert alert-danger" *ngIf="!email.valid && email.touched">
+        Please enter a valid email address.
+      </div>
 
 
       <div class="row">
@@ -46,6 +52,7 @@
             name="phone"
             [ngModel]="contact?.phone"
             #phone="ngModel"
+            required
             pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
             size="150"
             max="255">
@@ -53,7 +60,8 @@
         </div>
       </div>
 
-      <div class="alert alert-danger" *ngIf="phone.touched && phone.invalid">Please enter a valid telephone number.</div>
+      <div class="alert alert-danger" *ngIf="!phone.valid && phone.touched">
+        Please enter a valid telephone number.</div>
 
       <div class="row">
         <div class="col-sm-12 form-group">
@@ -75,7 +83,7 @@
           <label for="groupList">Group Contacts:</label>
           
           <div class="alert alert-success" *ngIf="lastAddSuccessful == true">Contact added.</div>
-          <div class="alert alert-danger" *ngIf="lastAddSuccessful == false">Contact cannot be added, either because it’s already in the group, or it’s the same as the parent.</div>
+          
 
           <div class="row" id="groupList"
               style="min-height: 3rem;" 

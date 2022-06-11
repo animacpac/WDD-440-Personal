@@ -29,13 +29,7 @@ export class ContactService {
 
   getContact(id: string): Contact | null{
     
-    for (let i = 0; i < this.contacts.length; i++) {
-      if(this.contacts[i].id == id){
-        return this.contacts[i];
-      }
-      
-    }
-    return null;
+    return this.contacts.find((contact) => contact.id === id);
        
    }
    deleteDocument(contact: Contact) {
@@ -80,11 +74,11 @@ export class ContactService {
 
    updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact)
-        return
+        return;
   
     let pos = this.contacts.indexOf(originalContact)
     if(pos < 0){
-      return
+      return;
     }
   
     newContact.id = originalContact.id
