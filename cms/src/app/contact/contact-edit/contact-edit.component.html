@@ -82,7 +82,7 @@
         <div class="form-group">
           <label for="groupList">Group Contacts:</label>
           
-          <div class="alert alert-success" *ngIf="lastAddSuccessful == true">Contact added.</div>
+          <div class="alert alert-success" *ngIf="invalidContact == true">Contact added.</div>
           
 
           <div class="row" id="groupList"
@@ -100,7 +100,9 @@
 
         </div>
       </div>
-
+      <div class="alert alert-danger" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty)">
+        The Name and Email are required.
+      </div>
 
       <div class="row">
         <div class="col-xs-12 btn-toolbar">

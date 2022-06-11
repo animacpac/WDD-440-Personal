@@ -27,7 +27,7 @@ export class ContactEditComponent implements OnInit {
   groupContacts: Contact[] = [];
   editMode: boolean = false;
   id?: string;
-  lastAddSuccessful: boolean = false;
+  invalidContact = false;
 
   constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute) { }
 
@@ -47,29 +47,29 @@ export class ContactEditComponent implements OnInit {
       }
     });
   }
-
+  addToGroup($event: any) {
+    const selectedContact = $event.dragData;
+    const invalidGroupContact = this.isInvalidContact(selectedContact);
+    if (invalidGroupContact) {
+      this.invalidContact = false;
+      return;
+    }
+    this.invalidContact = true;
+    this.groupContacts.push(selectedContact);
+  }
   isInvalidContact(newContact: Contact) {
     if (!newContact) return true;
-    if (this.contact && newContact.id === this.contact.id) return true;
-    for (let i = 0; i < this.groupContacts.length; i++) {
-      if (newContact.id === this.groupContacts[i].id) return true;
+    if (this.contact && newContact.id === this.contact.id) {
+      return true;
+    } 
+    for(let contactItem of this.groupContacts){
+      if(newContact.id === contactItem.id){
+        return true;
+      }
     }
     return false;
   }
 
-
-
-
-  addToGroup($event: any) {
-    const selectedContact: Contact = $event.dragData;
-    const invalidGroupContact = this.isInvalidContact(selectedContact);
-    if (invalidGroupContact) {
-      this.lastAddSuccessful = false;
-      return;
-    }
-    this.lastAddSuccessful = true;
-    this.groupContacts.push(selectedContact);
-  }
   onSubmit(form: NgForm) {
     let value = form.value;
     let newContact = new Contact(value.id, value.name, value.email, value.phone, value.imageUrl, this.groupContacts);
