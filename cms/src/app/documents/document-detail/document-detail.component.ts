@@ -22,12 +22,12 @@ export class DocumentDetailComponent implements OnInit {
     private windRef: WindRefService) { }
 
   ngOnInit(): void {
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.id = params['id']
-          this.document = this.documentService.getDocument(this.id)
-        })
+    this.route.params.subscribe(
+      (params: Params) => {
+        let id = params['id'];
+        this.document = this.documentService.getDocument(id);
+      }
+    );
     this.nativeWindow = this.windRef.getNativeWindow();//Previous lesson told us to use in ngOnInit instead of constructor
   }
   onView() {

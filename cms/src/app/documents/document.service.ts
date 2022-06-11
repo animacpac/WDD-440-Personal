@@ -33,17 +33,7 @@ export class DocumentService {
     return null
 
   }
-  deleteDocument(document: Document) {
-    if (!document) {
-      return;
-    }
-    const pos = this.documents.indexOf(document);
-    if (pos < 0) {
-      return;
-    };
-    this.documents.splice(pos, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
-  }
+  
 
   getMaxId() {
 
@@ -65,25 +55,38 @@ export class DocumentService {
       return;
     }
 
-    this.maxDocumentId++
+    this.maxDocumentId++;
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument)
-    const documentsListClone = this.documents.slice()
+    let documentsListClone = [...this.documents];
     this.documentListChangedEvent.next(documentsListClone)
   }
   updateDocument(originalDocument: Document, newDocument: Document) {
-    if (!originalDocument || !newDocument)
-        return
+    if (!originalDocument || !newDocument){
+        return;}
   
     let pos = this.documents.indexOf(originalDocument)
     if(pos < 0){
-      return
+      return;
     }
   
     newDocument.id = originalDocument.id
     this.documents[pos] = newDocument
-    const documentsListClone = this.documents.slice()
+    let documentsListClone = [...this.documents];
     this.documentListChangedEvent.next(documentsListClone)
+  }
+  deleteDocument(document: Document) {
+    if (!document) {
+      return;
+    }
+    const pos = this.documents.indexOf(document);
+    if (pos < 0) {
+      return;
+    };
+    this.documents.splice(pos, 1);
+    
+    let documentsListClone = [...this.documents];
+    this.documentListChangedEvent.next(documentsListClone);
   }
   
 

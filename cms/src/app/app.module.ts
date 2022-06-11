@@ -18,6 +18,10 @@ import { MessageEditComponent } from './messages/message-edit/message-edit.compo
 import { MessageItemComponent } from './messages/message-item/message-item.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {DndModule} from 'ng2-dnd'
+import { RouterModule } from '@angular/router';
+
 
 
 
@@ -42,8 +46,12 @@ import { AppRoutingModule } from './app-routing.module';
 
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DndModule.forRoot()
   ],
   providers: [],
   exports:[],

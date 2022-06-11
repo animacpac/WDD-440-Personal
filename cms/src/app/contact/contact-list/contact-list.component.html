@@ -10,7 +10,9 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-xs-12">
-                <app-contact-item *ngFor='let contactEl of contact' [contact]="contactEl"></app-contact-item>
+                <app-contact-item *ngFor='let contactEl of contact' [contact]="contactEl" dnd-draggable
+                    [dragEnabled]="true" [dragData]="contact" [dropZones]="['contactGroup']">
+                </app-contact-item>
             </div>
         </div>
     </div>
