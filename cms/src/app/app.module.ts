@@ -19,8 +19,9 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {DndModule} from 'ng2-dnd'
+import { DndModule } from 'ng2-dnd'
 import { RouterModule } from '@angular/router';
+import { HttpClientModule }
 
 
 
