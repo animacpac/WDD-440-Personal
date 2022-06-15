@@ -48,13 +48,13 @@ export class ContactEditComponent implements OnInit {
     });
   }
   addToGroup($event: any) {
-    const selectedContact = $event.dragData;
-    const invalidGroupContact = this.isInvalidContact(selectedContact);
-    if (invalidGroupContact) {
-      this.invalidContact = false;
-      return;
-    }
-    this.invalidContact = true;
+    const selectedContact: Contact = $event.dragData;
+    // const invalidGroupContact = this.isInvalidContact(selectedContact);
+    // if (invalidGroupContact) {
+    //   this.invalidContact = false;
+    //   return;
+    // }
+    // this.invalidContact = true;
     this.groupContacts.push(selectedContact);
   }
   isInvalidContact(newContact: Contact) {
