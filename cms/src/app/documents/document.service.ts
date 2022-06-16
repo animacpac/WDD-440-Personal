@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Document } from './document.model';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -16,7 +18,7 @@ export class DocumentService {
   documentListChangedEvent = new Subject<Document[]>();
   documentChangedEvent = new EventEmitter<Document[]>();
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.documents = MOCKDOCUMENTS;
     this.maxDocumentId = this.getMaxId();
   }
