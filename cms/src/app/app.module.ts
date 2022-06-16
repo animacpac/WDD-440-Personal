@@ -21,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd'
 import { RouterModule } from '@angular/router';
-import { HttpClientModule }
+import { HttpClientModule } from '@angular/common/http';
+import { ContactsFilterPipe } from './contact/contacts-filter.pipe'
 
 
 
@@ -44,6 +45,7 @@ import { HttpClientModule }
     MessageEditComponent,
     MessageItemComponent,
     MessageListComponent,
+    ContactsFilterPipe,
 
   ],
   imports: [
@@ -52,7 +54,8 @@ import { HttpClientModule }
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   exports:[],
