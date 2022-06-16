@@ -23,7 +23,29 @@ export class DocumentService {
     this.maxDocumentId = this.getMaxId();
   }
   getDocuments(): Document[] {
-    return this.documents.slice()
+
+    this.http
+      .get(
+        'https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json'
+      ).subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+          this.maxDocumentId = this.getMaxId();
+          this.documents.sort((a: Document, b: Document) => {
+            if (a.name === b.name) {
+              return 0;
+            }
+            return a.name > b.name ? 1 : -1;
+          });
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+
+    return this.documents.slice();
+
   }
 
   getDocument(id: string): Document | null {
@@ -35,7 +57,7 @@ export class DocumentService {
     return null
 
   }
-  
+
 
   getMaxId() {
 
@@ -64,14 +86,15 @@ export class DocumentService {
     this.documentListChangedEvent.next(documentsListClone)
   }
   updateDocument(originalDocument: Document, newDocument: Document) {
-    if (!originalDocument || !newDocument){
-        return;}
-  
-    let pos = this.documents.indexOf(originalDocument)
-    if(pos < 0){
+    if (!originalDocument || !newDocument) {
       return;
     }
-  
+
+    let pos = this.documents.indexOf(originalDocument)
+    if (pos < 0) {
+      return;
+    }
+
     newDocument.id = originalDocument.id
     this.documents[pos] = newDocument
     let documentsListClone = [...this.documents];
@@ -85,13 +108,39 @@ export class DocumentService {
     if (pos < 0) {
       return;
     };
+    this.http
+      .delete('https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json' + document.id)
+      .subscribe((response: Response) => {
+        this.documents.splice(pos, 1);
+        let documentsListClone = this.documents.slice();
+        this.documentListChangedEvent.next(documentsListClone);
+      });
+
     this.documents.splice(pos, 1);
-    
+
     let documentsListClone = [...this.documents];
     this.documentListChangedEvent.next(documentsListClone);
   }
-  
-
-
-  
+  storeDocuments() {
+    const docArray: string = JSON.stringify(this.documents);
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    this.http
+      .put(
+        'https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json',
+        docArray,
+        {
+          headers: headers,
+        }
+      )
+      .subscribe(() => {
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
+  }
 }
+
+
+
+
+
