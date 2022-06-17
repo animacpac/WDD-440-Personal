@@ -8,10 +8,10 @@
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
@@ -25,8 +25,8 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }

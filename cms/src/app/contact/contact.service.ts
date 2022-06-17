@@ -17,13 +17,27 @@ export class ContactService {
   maxContactId: number;
 
 
-  constructor() { 
+  constructor(public http: HttpClient) { 
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
   }
 
   getContacts(): Contact[] {
-    return this.contacts.slice();
+    this.http
+      .get(
+        'https://animac-test-default-rtdb.firebaseio.com/contacts.json'
+      ).subscribe({
+        next: (contacts: Contact[]) => {
+          this.contacts = contacts;
+          this.maxContactId = this.getMaxId();
+          this.contacts.sort();
+          this.contactListChangedEvent.next([...this.contacts]);
+
+        },
+        error: (e) => console.log(e.document),
+      });
+    return;
+     
   }
   
 
@@ -69,8 +83,7 @@ export class ContactService {
     this.maxContactId++
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact)
-    const contactsListClone = this.contacts.slice()
-    this.contactListChangedEvent.next(contactsListClone)
+    this.storeContacts();
    }
 
    updateContact(originalContact: Contact, newContact: Contact) {
@@ -84,8 +97,7 @@ export class ContactService {
   
     newContact.id = originalContact.id
     this.contacts[pos] = newContact
-    const documentsListClone = this.contacts.slice()
-    this.contactListChangedEvent.next(documentsListClone)
+    this.storeContacts();
   }
 
    deleteContact(contact: Contact) {
@@ -97,7 +109,14 @@ export class ContactService {
        return;
     }
     this.contacts.splice(pos, 1);
-    this.contactListChangedEvent.next(this.contacts.slice());
+    this.storeContacts();
  }
+ storeContacts() {
+  const contactList = JSON.stringify(this.contacts);
+  this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contactList, {
+    headers: new HttpHeaders({ "Content-Type": "application/json" })
+  })
+}
+ 
 }
 

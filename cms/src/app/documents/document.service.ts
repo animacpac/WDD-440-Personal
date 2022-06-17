@@ -1,8 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Document } from './document.model';
-import { Subject, Subscription } from 'rxjs';
-
+import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -18,33 +17,25 @@ export class DocumentService {
   documentListChangedEvent = new Subject<Document[]>();
   documentChangedEvent = new EventEmitter<Document[]>();
 
-  constructor(private http: HttpClient) {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  constructor(public http: HttpClient) {
+    // this.maxDocumentId = this.getMaxId();
+    this.getDocuments();
   }
   getDocuments(): Document[] {
-
     this.http
       .get(
-        'https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json'
-      ).subscribe(
-        (documents: Document[]) => {
+        'https://animac-test-default-rtdb.firebaseio.com/documents.json'
+      ).subscribe({
+        next: (documents: Document[]) => {
           this.documents = documents;
           this.maxDocumentId = this.getMaxId();
-          this.documents.sort((a: Document, b: Document) => {
-            if (a.name === b.name) {
-              return 0;
-            }
-            return a.name > b.name ? 1 : -1;
-          });
-          this.documentListChangedEvent.next(this.documents.slice());
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+          this.documents.sort();
+          this.documentListChangedEvent.next([...this.documents]);
 
-    return this.documents.slice();
+        },
+        error: (e) => console.log(e.document),
+      });
+    return;
 
   }
 
@@ -62,7 +53,6 @@ export class DocumentService {
   getMaxId() {
 
     let maxId = 0;
-
     for (const document of this.documents) {
       const currentId = +document.id;
       if (currentId > maxId) {
@@ -82,8 +72,8 @@ export class DocumentService {
     this.maxDocumentId++;
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument)
-    let documentsListClone = [...this.documents];
-    this.documentListChangedEvent.next(documentsListClone)
+
+    this.storeDocuments();
   }
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
@@ -97,8 +87,9 @@ export class DocumentService {
 
     newDocument.id = originalDocument.id
     this.documents[pos] = newDocument
-    let documentsListClone = [...this.documents];
-    this.documentListChangedEvent.next(documentsListClone)
+    // let documentsListClone = [...this.documents];
+    // this.documentListChangedEvent.next(documentsListClone)
+    this.storeDocuments();
   }
   deleteDocument(document: Document) {
     if (!document) {
@@ -108,39 +99,17 @@ export class DocumentService {
     if (pos < 0) {
       return;
     };
-    this.http
-      .delete('https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json' + document.id)
-      .subscribe((response: Response) => {
-        this.documents.splice(pos, 1);
-        let documentsListClone = this.documents.slice();
-        this.documentListChangedEvent.next(documentsListClone);
-      });
-
     this.documents.splice(pos, 1);
 
-    let documentsListClone = [...this.documents];
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
+
   storeDocuments() {
-    const docArray: string = JSON.stringify(this.documents);
-    const headers: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    this.http
-      .put(
-        'https://wdd430-cms-a12cc-default-rtdb.firebaseio.com/documents.json',
-        docArray,
-        {
-          headers: headers,
-        }
-      )
-      .subscribe(() => {
-        this.documentListChangedEvent.next(this.documents.slice());
-      });
+    const documentList = JSON.stringify(this.documents);
+    this.http.put('https://animac-test-default-rtdb.firebaseio.com/documents.json', documentList, {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    })
   }
+
+
 }
-
-
-
-
-
