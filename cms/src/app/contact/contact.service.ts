@@ -79,10 +79,11 @@ export class ContactService {
     if (!newContact) {
       return;
     }
-     
-    this.maxContactId++
+
+    this.maxContactId++;
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact)
+
     this.storeContacts();
    }
 
@@ -111,11 +112,20 @@ export class ContactService {
     this.contacts.splice(pos, 1);
     this.storeContacts();
  }
- storeContacts() {
-  const contactList = JSON.stringify(this.contacts);
-  this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contactList, {
-    headers: new HttpHeaders({ "Content-Type": "application/json" })
-  })
+ storeContacts(){
+
+  let contacts = JSON.stringify(this.contacts);
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
+   this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contacts, { headers: headers })
+    .subscribe(
+      () => {
+        this.contactListChangedEvent.next(this.contacts.slice());
+      }
+    )
 }
  
 }

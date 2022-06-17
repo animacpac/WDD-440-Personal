@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Document } from './document.model';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -105,10 +104,19 @@ export class DocumentService {
   }
 
   storeDocuments() {
-    const documentList = JSON.stringify(this.documents);
-    this.http.put('https://animac-test-default-rtdb.firebaseio.com/documents.json', documentList, {
-      headers: new HttpHeaders({ "Content-Type": "application/json" })
-    })
+
+    let documents = JSON.stringify(this.documents);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+     this.http.put('https://animac-test-default-rtdb.firebaseio.com/documents.json', documents, { headers: headers })
+      .subscribe(
+        () => {
+          this.documentListChangedEvent.next(this.documents.slice());
+        }
+      )
   }
 
 

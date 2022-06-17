@@ -35,9 +35,17 @@ export class MessageService {
     return;
   }
  
-  addMessage(message:Message){
-    this.messages.push(message);
-    this.messageChangedEvent.emit(this.messages);
+  addMessage(newMessage:Message){
+    if (!newMessage) {
+      return;
+    }
+
+    this.maxMessageId++;
+    newMessage.id = this.maxMessageId.toString();
+    this.messages.push(newMessage)
+
+    
+    this.storeMessages();
   }
   getMaxId() {
 
@@ -51,6 +59,20 @@ export class MessageService {
     }
 
     return maxId;
+  }
+  storeMessages() {
+    let messages = JSON.stringify(this.messages);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+     this.http.put('https://animac-test-default-rtdb.firebaseio.com/messages.json', messages, { headers: headers })
+      .subscribe(
+        () => {
+          this.messageListChangedEvent.next(this.messages.slice());
+        }
+      )
   }
 
 }
