@@ -25,7 +25,7 @@ export class ContactService {
   getContacts(): Contact[] {
     this.http
       .get(
-        'http://localhost:3000/documents'
+        'http://localhost:3000/contacts'
       ).subscribe({
         next: (contacts: Contact[]) => {
           this.contacts = contacts;
@@ -71,7 +71,7 @@ export class ContactService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // add to database
-    this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/documents',
+    this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/contacts',
     contact,
       { headers: headers })
       .subscribe(
@@ -101,7 +101,7 @@ export class ContactService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // update database
-    this.http.put('http://localhost:3000/documents/' + originalContact.id,
+    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
     newContact, { headers: headers })
       .subscribe(
         (response: Response) => {
@@ -124,7 +124,7 @@ export class ContactService {
     }
 
     // delete from database
-    this.http.delete('http://localhost:3000/documents/' + contact.id)
+    this.http.delete('http://localhost:3000/contacts/' + contact.id)
       .subscribe(
         (response: Response) => {
           this.contacts.splice(pos, 1);
