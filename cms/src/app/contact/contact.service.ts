@@ -17,7 +17,7 @@ export class ContactService {
   maxContactId: number;
 
 
-  constructor(public http: HttpClient) { 
+  constructor(public http: HttpClient) {
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
   }
@@ -25,7 +25,7 @@ export class ContactService {
   getContacts(): Contact[] {
     this.http
       .get(
-        'https://animac-test-default-rtdb.firebaseio.com/contacts.json'
+        'http://localhost:3000/documents'
       ).subscribe({
         next: (contacts: Contact[]) => {
           this.contacts = contacts;
@@ -37,29 +37,16 @@ export class ContactService {
         error: (e) => console.log(e.document),
       });
     return;
-     
+
   }
-  
 
+  getContact(id: string): Contact | null {
 
-  getContact(id: string): Contact | null{
-    
     return this.contacts.find((contact) => contact.id === id);
-       
-   }
-   deleteDocument(contact: Contact) {
-    if (!contact) {
-      return;
-    }
-    const pos = this.contacts.indexOf(contact);
-    if (pos < 0) {
-      return;
-    };
-    this.contacts.splice(pos, 1);
-    this.contactListChangedEvent.next(this.contacts.slice());
+
   }
 
-   getMaxId() {
+  getMaxId() {
 
     let maxId = 0;
 
@@ -73,60 +60,101 @@ export class ContactService {
     return maxId;
   }
 
-
-   addContact(newContact: Contact){
-
-    if (!newContact) {
+  addContact(contact: Contact) {
+    if (!contact) {
       return;
     }
 
-    this.maxContactId++;
-    newContact.id = this.maxContactId.toString();
-    this.contacts.push(newContact)
 
-    this.storeContacts();
-   }
+    contact.id = '';
 
-   updateContact(originalContact: Contact, newContact: Contact) {
-    if (!originalContact || !newContact)
-        return;
-  
-    let pos = this.contacts.indexOf(originalContact)
-    if(pos < 0){
-      return;
-    }
-  
-    newContact.id = originalContact.id
-    this.contacts[pos] = newContact
-    this.storeContacts();
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/documents',
+    contact,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+
+          this.contacts.push(responseData.contact);
+          this.sortAndSend();
+        }
+      );
   }
 
-   deleteContact(contact: Contact) {
-    if (!contact) {
-       return;
+  updateContact(originalContact: Contact, newContact: Contact) {
+    if (!originalContact || !newContact) {
+      return;
     }
-    const pos = this.contacts.indexOf(contact);
+
+    const pos = this.contacts.findIndex(d => d.id === originalContact.id);
+
     if (pos < 0) {
-       return;
+      return;
     }
-    this.contacts.splice(pos, 1);
-    this.storeContacts();
- }
- storeContacts(){
 
-  let contacts = JSON.stringify(this.contacts);
+    
+    newContact.id = originalContact.id;
+    //newDocument._id = originalDocument._id;
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json'
-  });
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-   this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contacts, { headers: headers })
-    .subscribe(
-      () => {
-        this.contactListChangedEvent.next(this.contacts.slice());
-      }
-    )
-}
- 
+    // update database
+    this.http.put('http://localhost:3000/documents/' + originalContact.id,
+    newContact, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.contacts[pos] = newContact;
+          this.sortAndSend();
+        }
+      );
+  }
+
+  deleteContact(contact: Contact) {
+
+    if (!contact) {
+      return;
+    }
+
+    const pos = this.contacts.findIndex(d => d.id === contact.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.http.delete('http://localhost:3000/documents/' + contact.id)
+      .subscribe(
+        (response: Response) => {
+          this.contacts.splice(pos, 1);
+          this.sortAndSend();
+        }
+      );
+  }
+
+
+  sortAndSend() {
+    const docList = JSON.stringify(this.contacts)
+    let contactListClone = this.contacts.slice()
+    this.contactListChangedEvent.next(contactListClone)
+
+  }
+  // storeContacts() {
+
+  //   let contacts = JSON.stringify(this.contacts);
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+
+  //   this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contacts, { headers: headers })
+  //     .subscribe(
+  //       () => {
+  //         this.contactListChangedEvent.next(this.contacts.slice());
+  //       }
+  //     )
+  // }
+
 }
 

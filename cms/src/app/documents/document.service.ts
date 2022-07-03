@@ -23,7 +23,7 @@ export class DocumentService {
   getDocuments(): Document[] {
     this.http
       .get(
-        'https://animac-test-default-rtdb.firebaseio.com/documents.json'
+        'http://localhost:3000/documents'
       ).subscribe({
         next: (documents: Document[]) => {
           this.documents = documents;
@@ -61,63 +61,103 @@ export class DocumentService {
 
     return maxId;
   }
-
-  addDocument(newDocument: Document) {
-
-    if (!newDocument) {
+  addDocument(document: Document) {
+    if (!document) {
       return;
     }
 
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument)
+    // make sure id of the new Document is empty
+    document.id = '';
 
-    this.storeDocuments();
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, document: Document }>('http://localhost:3000/documents',
+      document,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new document to documents
+          this.documents.push(responseData.document);
+          this.sortAndSend();
+        }
+      );
   }
+
+
+
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
     }
 
-    let pos = this.documents.indexOf(originalDocument)
+    const pos = this.documents.findIndex(d => d.id === originalDocument.id);
+
     if (pos < 0) {
       return;
     }
 
-    newDocument.id = originalDocument.id
-    this.documents[pos] = newDocument
-    // let documentsListClone = [...this.documents];
-    // this.documentListChangedEvent.next(documentsListClone)
-    this.storeDocuments();
+    // set the id of the new Document to the id of the old Document
+    newDocument.id = originalDocument.id;
+    //newDocument._id = originalDocument._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // update database
+    this.http.put('http://localhost:3000/documents/' + originalDocument.id,
+      newDocument, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.documents[pos] = newDocument;
+          this.sortAndSend();
+        }
+      );
   }
+
   deleteDocument(document: Document) {
+
     if (!document) {
       return;
     }
-    const pos = this.documents.indexOf(document);
+
+    const pos = this.documents.findIndex(d => d.id === document.id);
+
     if (pos < 0) {
       return;
-    };
-    this.documents.splice(pos, 1);
+    }
 
-    this.storeDocuments();
-  }
-
-  storeDocuments() {
-
-    let documents = JSON.stringify(this.documents);
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-     this.http.put('https://animac-test-default-rtdb.firebaseio.com/documents.json', documents, { headers: headers })
+    // delete from database
+    this.http.delete('http://localhost:3000/documents/' + document.id)
       .subscribe(
-        () => {
-          this.documentListChangedEvent.next(this.documents.slice());
+        (response: Response) => {
+          this.documents.splice(pos, 1);
+          this.sortAndSend();
         }
-      )
+      );
   }
+  sortAndSend() {
+    const docList = JSON.stringify(this.documents)
+    let documentsListClone = this.documents.slice()
+    this.documentListChangedEvent.next(documentsListClone)
+
+  }
+
+
+  // storeDocuments() {
+
+  //   let documents = JSON.stringify(this.documents);
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+
+  //    this.http.put('https://animac-test-default-rtdb.firebaseio.com/documents.json', documents, { headers: headers })
+  //     .subscribe(
+  //       () => {
+  //         this.documentListChangedEvent.next(this.documents.slice());
+  //       }
+  //     )
+  //}
 
 
 }
