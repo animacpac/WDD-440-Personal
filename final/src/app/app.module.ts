@@ -19,7 +19,8 @@ import { PictureListComponent } from './picture/picture-list/picture-list.compon
 const appRoutes: Routes =[
   { path:'', component: ContactComponent },
   { path:'picture', component: PictureComponent },
-  { path:'contact', component: ContactComponent }
+  { path:'contact', component: ContactComponent },
+  { path:'about', component: AboutComponent}
 ];
 
 @NgModule({
