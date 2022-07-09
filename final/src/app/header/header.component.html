@@ -1,21 +1,22 @@
-<header><link rel="stylesheet"
+<header>
+    <link rel="stylesheet"
                     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 <div class="toolbar" role="banner">
-    <img width="40" alt="Final Logo" src="https://angular.io/generated/images/marketing/concept-icons/templates.png" />
+    
     <span>
-        <div class="card-container">
-            <a class="card" target="_blank" rel="noopener" href="./">
+        <div class="card-container" routerLink="active">
+            <a class="card" target="_blank" routerLink="">
                 
                 <span class="material-symbols-outlined">
                     house
-                    </span><span class="h7">Home</span>
+                    </span><span class="h7" >Home</span>
             </a>
         </div>
     </span>
     <div class="spacer">
-        <div class="card-container">
-            <a class="card" target="_blank" rel="noopener" href="about">
+        <div class="card-container" routerLinkActive="active">
+            <a class="card" target="_blank" routerLink="./picture">
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
@@ -30,9 +31,9 @@
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path
-                        d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+                        d="M3 4.999h6l1.001 1.999h10.999v12H3z" />
                 </svg>
-                <span>CLI Documentation</span>
+                <span>Pictures</span>
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular"
+    <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/Vbarreto122"
         title="Twitter">
         <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
             <rect width="400" height="400" fill="none" />
@@ -53,7 +54,7 @@
                 fill="#fff" />
         </svg>
     </a>
-    <a aria-label="Angular on YouTube" target="_blank" rel="noopener" href="https://youtube.com/angular"
+    <a aria-label="YouTube" target="_blank" rel="noopener" href="https://studio.youtube.com/channel/UCG3m1J9MarrLkPoCKfvc4ZQ/videos/upload?filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7Dr"
         title="YouTube">
         <svg id="youtube-logo" height="24" width="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24" fill="#fff">
@@ -62,6 +63,24 @@
                 d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z" />
         </svg>
     </a>
+    <a aria-label="Angular on YouTube" target="_blank" rel="noopener" href="https://www.facebook.com/valter.m.barreto"
+    title="FaceBook">
+    <svg width="48px" height="48px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+        <title>Facebook</title>
+        <style type="text/css">
+            .facebook--white {
+                fill-rule: evenodd;
+                clip-rule: evenodd;
+                fill: #fff;
+            }
+        </style>
+        <g>
+            <path class="facebook--white" d="M30.1,40V27.6h4.2l0.6-4.8h-4.8v-3.1c0-1.4,0.4-2.4,2.4-2.4l2.6,0V13c-0.4-0.1-2-0.2-3.7-0.2
+  		c-3.7,0-6.2,2.3-6.2,6.4v3.6h-4.2v4.8h4.2V40H30.1z M9.8,40c-1,0-1.8-0.8-1.8-1.8V9.8C8,8.8,8.8,8,9.8,8h28.5c1,0,1.8,0.8,1.8,1.8
+  		v28.5c0,1-0.8,1.8-1.8,1.8H9.8z" />
+        </g>
+    </svg>
+</a>
 
 </div>
 </header>

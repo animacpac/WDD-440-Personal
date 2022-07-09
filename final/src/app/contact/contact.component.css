@@ -1,0 +1,13 @@
+.dbody{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    box-shadow: 20px 20px 10px grey;
+    
+  }
+  body{
+    padding: 100px;
+   
+    background: linear-gradient(steelblue, white);
+    }
