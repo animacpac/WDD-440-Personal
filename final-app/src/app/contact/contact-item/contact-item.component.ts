@@ -9,7 +9,9 @@ import { Contact } from '../contact.model';
   styleUrls: ['./contact-item.component.css']
 })
 export class ContactItemComponent implements OnInit {
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   @Input() contact!: Contact;
+
 
   constructor() { }
 

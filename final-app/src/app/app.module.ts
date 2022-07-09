@@ -23,7 +23,7 @@ import { DndModule } from 'ng2-dnd'
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactsFilterPipe } from './contact/contacts-filter.pipe'
-
+import { NgbdCarouselBasic } from './contact/contact-carousel/carousel-basic';
 
 
 
@@ -46,7 +46,7 @@ import { ContactsFilterPipe } from './contact/contacts-filter.pipe'
     MessageItemComponent,
     MessageListComponent,
     ContactsFilterPipe,
-
+    NgbdCarouselBasic
   ],
   imports: [
     BrowserModule,

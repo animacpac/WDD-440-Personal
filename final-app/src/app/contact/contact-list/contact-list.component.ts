@@ -2,6 +2,10 @@ import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/cor
 import { ContactService } from '../contact.service';
 import { Contact } from '../contact.model';
 import { Subscription } from 'rxjs';
+import { NgbdCarouselBasic } from '../contact-carousel/carousel-basic';
+
+
+
 
 @Component({
   selector: 'app-contact-list',
@@ -32,4 +36,5 @@ export class ContactListComponent implements OnInit {
   search(value: string) {
     this.term = value;
   }
+  
 }
