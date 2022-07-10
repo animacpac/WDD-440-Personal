@@ -1,20 +1,19 @@
 const sequenceGenerator = require('./sequenceGenerator');
-const Contact = require('../models/contact');
+const Picture = require('../models/picture');
 
 
 var express = require('express');
-const contact = require('../models/contact');
+const picture = require('../models/picture');
 var router = express.Router();
 module.exports = router; 
-// Gets the list of contacts
+
 router.get('/', (req, res, next) => {
 
-    Contact.find()
-        .populate("group")
-        .then(contacts => {
+    Picture.find()
+        .then(pictures => {
             res.status(200).json({
-                message: 'Contacts fetched successfully!',
-                contacts: contacts
+                message: 'Pictures fetched successfully!',
+                pictures: pictures
             });
         })
         .catch(error => {
@@ -26,21 +25,21 @@ router.get('/', (req, res, next) => {
 });
 // Post the information
 router.post('/', (req, res, next) => {
-    const maxContactId = sequenceGenerator.nextId("contacts");
+    const maxPictureId = sequenceGenerator.nextId("pictures");
 
-    const contact = new Contact({
-        id: maxContactId,
+    const picture = new Picture({
+        id: maxPictureId,
         name: req.body.name,
-        imageUrl: req.body.imageUrl,
-        email: req.body.email,
-        phone: req.body.phone,
-        group: req.body.group,
+        description: req.body.imageUrl,
+        location: req.body.email,
+        imageUrl: req.body.phone,
+        
     });
-    contact.save()
-        .then(createdContact => {
+    picture.save()
+        .then(createdPicture => {
             res.status(201).json({
-                message: 'Contact added successfully',
-                document: createdContact
+                message: 'Picture added successfully',
+                document: createdPicture
             });
         })
         .catch(error => {
@@ -53,16 +52,17 @@ router.post('/', (req, res, next) => {
 
 //Update the information
 router.put('/:id', (req, res, next) => {
-    Contact.findOne({ id: req.params.id })
-        .then(contact => {
-            contact.name = req.body.name;
-            contact.description = req.body.description;
-            contact.url = req.body.url;
+    Picture.findOne({ id: req.params.id })
+        .then(picture => {
+            picture.name = req.body.name;
+            picture.description = req.body.description;
+            picture.location = req.body.location;
+            picture.url = req.body.url;
 
-            Contact.updateOne({ id: req.params.id }, contact)
+            Picture.updateOne({ id: req.params.id }, picture)
                 .then(result => {
                     res.status(204).json({
-                        message: 'Contact updated successfully'
+                        message: 'Picture updated successfully'
                     })
                 })
                 .catch(error => {
@@ -74,19 +74,19 @@ router.put('/:id', (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Contact not found.',
-                error: { contact: 'Contact not found' }
+                message: 'Picture not found.',
+                error: { picture: 'Picture not found' }
             });
         });
 });
 //Delete the request
 router.delete("/:id", (req, res, next) => {
-    Contact.findOne({ id: req.params.id })
-        .then(contact => {
-            Contact.deleteOne({ id: req.params.id })
+    Picture.findOne({ id: req.params.id })
+        .then(picture => {
+            Picture.deleteOne({ id: req.params.id })
                 .then(result => {
                     res.status(204).json({
-                        message: "Contact deleted successfully"
+                        message: "Picture deleted successfully"
                     });
                 })
                 .catch(error => {
@@ -98,8 +98,8 @@ router.delete("/:id", (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Contact not found.',
-                error: { contact: 'Document not found' }
+                message: 'Picture not found.',
+                error: { picture: 'Document not found' }
             });
         });
 });

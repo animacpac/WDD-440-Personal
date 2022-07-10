@@ -7,42 +7,42 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ContactService {
-  contacts: Picture[] = [];
-  contactSelectedEvent = new EventEmitter<Picture[]>();
-  contactChangedEvent = new EventEmitter<Picture[]>();
-  contactListChangedEvent = new Subject<Picture[]>();
+export class PictureService {
+  pictures: Picture[] = [];
+  pictureSelectedEvent = new EventEmitter<Picture[]>();
+  pictureChangedEvent = new EventEmitter<Picture[]>();
+  pictureListChangedEvent = new Subject<Picture[]>();
   Subject: Picture[] = [];
 
-  maxContactId: number;
+  maxPictureId: number;
 
 
   constructor(public http: HttpClient) {
    
-    this.maxContactId = this.getMaxId();
+    this.maxPictureId = this.getMaxId();
   }
 
-  getContacts(): Picture[] {
+  getPictures(): Picture[] {
     this.http
       .get(
-        'http://localhost:3000/contacts'
+        'http://localhost:3000/pictures'
       ).subscribe({
-        next: (contacts: Picture[]) => {
-          this.contacts = contacts;
-          this.maxContactId = this.getMaxId();
-          this.contacts.sort();
-          this.contactListChangedEvent.next([...this.contacts]);
+        next: (pictures: Picture[]) => {
+          this.pictures = pictures;
+          this.maxPictureId = this.getMaxId();
+          this.pictures.sort();
+          this.pictureListChangedEvent.next([...this.pictures]);
 
         },
-        error: (e) => console.log(e.document),
+        error: (e) => console.log(e.picture),
       });
     return;
 
   }
 
-  getContact(id: string): Picture | null {
+  getPicture(id: string): Picture | null {
 
-    return this.contacts.find((contact) => contact.id === id);
+    return this.pictures.find((picture) => picture.id === id);
 
   }
 
@@ -50,8 +50,8 @@ export class ContactService {
 
     let maxId = 0;
 
-    for (const contact of this.contacts) {
-      const currentId = +contact.id;
+    for (const picture of this.pictures) {
+      const currentId = +picture.id;
       if (currentId > maxId) {
         maxId = currentId;
       }
@@ -60,74 +60,74 @@ export class ContactService {
     return maxId;
   }
 
-  addContact(contact: Picture) {
-    if (!contact) {
+  addPicture(picture: Picture) {
+    if (!picture) {
       return;
     }
 
 
-    contact.id = '';
+    picture.id = '';
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // add to database
-    this.http.post<{ message: string, contact: Picture }>('http://localhost:3000/contacts',
-    contact,
+    this.http.post<{ message: string, picture: Picture }>('http://localhost:3000/pictures',
+    picture,
       { headers: headers })
       .subscribe(
         (responseData) => {
 
-          this.contacts.push(responseData.contact);
+          this.pictures.push(responseData.picture);
           this.sortAndSend();
         }
       );
   }
 
-  updateContact(originalContact: Picture, newContact: Picture) {
-    if (!originalContact || !newContact) {
+  updatePicture(originalPicture: Picture, newPicture: Picture) {
+    if (!originalPicture || !newPicture) {
       return;
     }
 
-    const pos = this.contacts.findIndex(d => d.id === originalContact.id);
+    const pos = this.pictures.findIndex(d => d.id === originalPicture.id);
 
     if (pos < 0) {
       return;
     }
 
     
-    newContact.id = originalContact.id;
+    newPicture.id = originalPicture.id;
     //newDocument._id = originalDocument._id;
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // update database
-    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
-    newContact, { headers: headers })
+    this.http.put('http://localhost:3000/pictures' + originalPicture.id,
+    newPicture, { headers: headers })
       .subscribe(
         (response: Response) => {
-          this.contacts[pos] = newContact;
+          this.pictures[pos] = newPicture;
           this.sortAndSend();
         }
       );
   }
 
-  deleteContact(contact: Picture) {
+  deletePicture(picture: Picture) {
 
-    if (!contact) {
+    if (!picture) {
       return;
     }
 
-    const pos = this.contacts.findIndex(d => d.id === contact.id);
+    const pos = this.pictures.findIndex(d => d.id === picture.id);
 
     if (pos < 0) {
       return;
     }
 
     // delete from database
-    this.http.delete('http://localhost:3000/contacts/' + contact.id)
+    this.http.delete('http://localhost:3000/pictures' + picture.id)
       .subscribe(
         (response: Response) => {
-          this.contacts.splice(pos, 1);
+          this.pictures.splice(pos, 1);
           this.sortAndSend();
         }
       );
@@ -135,26 +135,11 @@ export class ContactService {
 
 
   sortAndSend() {
-    const docList = JSON.stringify(this.contacts)
-    let contactListClone = this.contacts.slice()
-    this.contactListChangedEvent.next(contactListClone)
+    const docList = JSON.stringify(this.pictures)
+    let pictureListClone = this.pictures.slice()
+    this.pictureListChangedEvent.next(pictureListClone)
 
   }
-  // storeContacts() {
-
-  //   let contacts = JSON.stringify(this.contacts);
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   });
-
-  //   this.http.put('https://animac-test-default-rtdb.firebaseio.com/contacts.json', contacts, { headers: headers })
-  //     .subscribe(
-  //       () => {
-  //         this.contactListChangedEvent.next(this.contacts.slice());
-  //       }
-  //     )
-  // }
 
 }
 

@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Contact } from './picture.model';
+import { Picture } from './picture.model';
 
 @Pipe({
-  name: 'contactsFilter'
+  name: 'picturesFilter'
 })
-export class ContactsFilterPipe implements PipeTransform {
+export class PicturesFilterPipe implements PipeTransform {
   
 
-  transform(contacts: Contact[], term: string): any {
-    let filteredContacts: Contact[] = []
+  transform(pictures: Picture[], term: string): any {
+    let filteredPictures: Picture[] = []
     if (term && term.length > 0){
-      filteredContacts = contacts.filter((contact: Contact) => contact.name.toLowerCase().includes(term.toLowerCase()));
+      filteredPictures = pictures.filter((picture: Picture) => picture.name.toLowerCase().includes(term.toLowerCase()));
     }
-    if (filteredContacts.length < 1) return contacts;
-    return filteredContacts;
+    if (filteredPictures.length < 1) return pictures;
+    return filteredPictures;
   }
 
 }
