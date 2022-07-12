@@ -10,7 +10,8 @@ const routes: Routes = [];
 export class AppRoutingModule { }
 
 import { ContactComponent } from './contact/contact.component';
-import { PictureComponent } from './picture/picture.component';
+import { PostListComponent } from './posts/post-list/post-list.component';
+
 
 
 const appRoutes: Routes = [
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     //     ]
     // },
     { path: 'contact', component: ContactComponent },
-    { path: 'picture', component: PictureComponent },
+    { path: 'picture', component: PostListComponent },
+  
     // {
     //     path: 'contacts', component: ContactComponent, children: [
     //         { path: 'new', component: ContactEditComponent },

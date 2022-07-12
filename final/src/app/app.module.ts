@@ -5,22 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
-import { PictureComponent } from './picture/picture.component';
+
 import { HeaderComponent } from './header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
-import { PictureDetailComponent } from './picture/picture-detail/picture-detail.component';
-import { PictureEditComponent } from './picture/picture-edit/picture-edit.component';
-import { PictureItemComponent } from './picture/picture-item/picture-item.component';
-import { PictureListComponent } from './picture/picture-list/picture-list.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { PostListComponent } from './posts/post-list/post-list.component';
+import { PostCreateComponent } from './posts/post-create/post-create.component';
 
 const appRoutes: Routes =[
   { path:'', component: ContactComponent },
-  { path:'picture', component: PictureComponent },
   { path:'contact', component: ContactComponent },
-  { path:'about', component: AboutComponent}
+  { path:'about', component: AboutComponent},
+  { path: 'picture', component: PostListComponent },
 ];
 
 @NgModule({
@@ -28,13 +28,12 @@ const appRoutes: Routes =[
     AppComponent,
     ContactComponent,
     AboutComponent,
-    PictureComponent,
+    PostListComponent,
+    PostCreateComponent,
+
     HeaderComponent,
     FooterComponent,
-    PictureDetailComponent,
-    PictureEditComponent,
-    PictureItemComponent,
-    PictureListComponent
+
   ],
   imports: [
     BrowserModule,
@@ -42,7 +41,8 @@ const appRoutes: Routes =[
     NgbModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
