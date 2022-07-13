@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ContactComponent } from './contact/contact.component';
+import { PictureComponent } from './picture/picture.component';
 import { AboutComponent } from './about/about.component';
 
 import { HeaderComponent } from './header/header.component';
@@ -13,23 +13,39 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { PostListComponent } from './posts/post-list/post-list.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
+import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
+import { ContactItemComponent } from './contact/contact-item/contact-item.component';
+import { ContactListComponent } from './contact/contact-list/contact-list.component';
+import { ContactsFilterPipe } from './contact/contacts-filter.pipe';
+
+
 
 const appRoutes: Routes =[
-  { path:'', component: ContactComponent },
-  { path:'contact', component: ContactComponent },
+  { path:'', component: PictureComponent },
+  { path:'contact', component: PictureComponent },
   { path:'about', component: AboutComponent},
-  { path: 'picture', component: PostListComponent },
+  { path: 'picture', component: ContactComponent,children: [
+    { path: 'new', component: ContactEditComponent },
+    { path: ':id', component: ContactDetailComponent },
+    { path: ':id/edit', component: ContactEditComponent }]},
+
+
+
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactComponent,
+    PictureComponent,
     AboutComponent,
-    PostListComponent,
-    PostCreateComponent,
+    ContactComponent,
+    ContactDetailComponent,
+    ContactEditComponent,
+    ContactItemComponent,
+    ContactListComponent,
+    ContactsFilterPipe,
 
     HeaderComponent,
     FooterComponent,
@@ -42,7 +58,11 @@ const appRoutes: Routes =[
     RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    
+    
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

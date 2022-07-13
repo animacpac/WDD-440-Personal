@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ContactComponent } from './contact/contact.component';
+import { PictureComponent } from './picture/picture.component';
 
 const routes: Routes = [];
 
@@ -9,8 +11,8 @@ const routes: Routes = [];
 })
 export class AppRoutingModule { }
 
-import { ContactComponent } from './contact/contact.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
+
+
 
 
 
@@ -23,8 +25,8 @@ const appRoutes: Routes = [
     //         { path: ':id/edit', component: DocumentEditComponent }
     //     ]
     // },
+    { path: 'picture', component: PictureComponent },
     { path: 'contact', component: ContactComponent },
-    { path: 'picture', component: PostListComponent },
   
     // {
     //     path: 'contacts', component: ContactComponent, children: [

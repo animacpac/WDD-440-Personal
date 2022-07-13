@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Contact } from './contact.model';
+import { ContactService } from './contact.service';
 
 
 @Component({
@@ -7,12 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+  selectedContact!: Contact;
 
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
-  constructor() { }
+  constructor(private contactService: ContactService) { }
 
   ngOnInit(): void {
+    this.contactService.contactSelectedEvent
+      .subscribe(
+        (contact: Contact) => {
+          this.selectedContact = contact
+        }
+      );
   }
 
 }
