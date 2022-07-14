@@ -6,8 +6,8 @@ export class Picture {
   
     constructor(id: string, title: string, desc: string, imageUrl: string) {
       this.id = id;
-      this.title = title;
       this.description = desc;
       this.imageUrl = imageUrl;
+      this.title = title;
     }
   }

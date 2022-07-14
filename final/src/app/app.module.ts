@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PictureComponent } from './picture/picture.component';
 import { AboutComponent } from './about/about.component';
+import { PicturesFilterPipe } from './library/pictures-filter.pipe';
 
 import { HeaderComponent } from './header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -22,23 +23,19 @@ import { LibraryListComponent } from './library/library-list/library-list.compon
 
 
 
-const appRoutes: Routes =[
-  { path:'', component: PictureComponent },
-  { path:'contact', component: PictureComponent },
-  { path:'about', component: AboutComponent},
-  {
-    path: 'picture', component: LibraryComponent,
-     children: [
-        { path: 'new', component: LibraryEditComponent },
-        { path: ':id', component: LibraryDetailsComponent },
-        { path: ':id/edit', component: LibraryEditComponent }
-    ]
-}
-  
-
-
-
-];
+// const appRoutes: Routes =[
+//   { path:'', component: PictureComponent },
+//   { path:'contact', component: PictureComponent },
+//   { path:'about', component: AboutComponent},
+//   {
+//     path: 'picture', component: LibraryComponent,
+//      children: [
+//         { path: 'new', component: LibraryEditComponent },
+//         { path: ':id', component: LibraryDetailsComponent },
+//         { path: ':id/edit', component: LibraryEditComponent }
+//     ]
+// }
+// ];
 
 @NgModule({
   declarations: [
@@ -54,6 +51,7 @@ const appRoutes: Routes =[
     LibraryEditComponent,
     LibraryItemsComponent,
     LibraryListComponent,
+    PicturesFilterPipe
     
 
   ],
@@ -61,7 +59,7 @@ const appRoutes: Routes =[
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

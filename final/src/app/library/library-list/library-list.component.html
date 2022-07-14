@@ -1,23 +1,33 @@
 
-<div class="container">
-    <h1>Pictures</h1>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <button class="button-30" (click)="onNewPicture()">New Movie</button>
+<div class="panel panel-default">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="row">
+        <span class="title pad-left-right">Pictures</span>
       </div>
-    </div>
-    <hr />
-    <div class="row"><a class="shadow">
+      <div class="row">
+        <div class="input-group pull-left pad-left-right col-xs-7">
 
-      <div class="col-xs-12">
-        <app-library-items>
-          *ngFor="let pictureEL of pictures; let i = index"
-          [picture]="pictureEL"
-          [index]="i"
-        ></app-library-items>
-     
+          <input class="form-control" name="searchBox" placeholder="Enter a search value"
+            (keyup)="search(searchBox.value)" #searchBox>
+
+          <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
+        </div>
+        <div class="pull-right pad-left-right">
+          <a class="btn btn-success" [routerLink]="['new']">New Picture</a>
+        </div>
       </div>
-    </a>
+
     </div>
   </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <app-library-items *ngFor='let pictureEL of pictures|picturesFilter:term'[picture]="pictureEL" dnd-draggable
+        [dragEnabled]="true" [dragData]="pictureEL" [dropZones]="['contactGroup']">
+        </app-library-items>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -13,25 +13,26 @@ export class LibraryListComponent implements OnInit {
 
   pictures: Picture[];
   subscription: Subscription;
+  term!: string;
 
   constructor(private libraryService: LibraryService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.pictures = this.libraryService.getPictures();
-    this.libraryService.pictureChanged.subscribe((newPictures: Picture[]) => {
-      this.pictures = newPictures;
-    });
-    this.subscription = this.libraryService.pictureChanged.subscribe(
-      (pictureDisplay: Picture[]) => {
-        this.pictures = pictureDisplay;
-      }
-    );
+    this.subscription = this.libraryService.pictureChanged
+      .subscribe((pictures: Picture[]) => {
+        this.pictures = pictures;
+      })
+    this.libraryService.getPictures();
   }
-  onNewPicture(){
+
+  onNewPicture() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  search(value: string) {
+    this.term = value;
   }
 
 }

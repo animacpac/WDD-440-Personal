@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Picture } from './library-model';
 
 @Component({
   selector: 'app-library',

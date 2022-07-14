@@ -7,28 +7,9 @@ import { LibraryListComponent } from './library/library-list/library-list.compon
 import { LibraryComponent } from './library/library.component';
 import { PictureComponent } from './picture/picture.component';
 
-const routes: Routes = [];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
-
-
-
-
-
 
 const appRoutes: Routes = [
-    // { path: '', redirectTo: '/documents', pathMatch: "full" },
-    // {
-    //     path: 'documents', component: DocumentsComponent, children: [
-    //         { path: 'new', component: DocumentEditComponent },
-    //         { path: ':id', component: DocumentDetailComponent },
-    //         { path: ':id/edit', component: DocumentEditComponent }
-    //     ]
-    // },
+
     { path:'', component: PictureComponent },
     { path:'contact', component: PictureComponent },
     { path:'about', component: AboutComponent},
@@ -45,3 +26,8 @@ const appRoutes: Routes = [
     }
 ];
 
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule { }

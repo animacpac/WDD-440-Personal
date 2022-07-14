@@ -7,20 +7,20 @@ import { Picture } from './library-model';
     providedIn: 'root'
 })
 export class LibraryService {
-    pictureChanged = new Subject<Picture[]>();
+
     private pictures: Picture[] = [];
-
-
+    pictureChanged = new Subject<Picture[]>();
     maxPictureId: number;
 
     constructor(private http: HttpClient) {
-        this.maxPictureId
+        this.maxPictureId = this.getMaxId();
     }
 
     setPictures(newPictures: Picture[]) {
         this.pictures = newPictures;
         this.pictureChanged.next(this.pictures.slice())
     }
+    
     getMaxId(): number {
         let maxId = 0;
 
@@ -34,30 +34,26 @@ export class LibraryService {
     }
 
     getPictures() {
-        this.http.get('http://localhost:3000/final/pictures').subscribe(
-            (pictures: Picture[]) => {
+        this.http
+            .get(
+                'http://localhost:3000/final/pictures'
+            ).subscribe({
+                next: (pictures: Picture[]) => {
+                    this.pictures = pictures;
+                    this.maxPictureId = this.getMaxId();
+                    this.pictures.sort();
+                    this.pictureChanged.next([...this.pictures]);
 
-                this.pictures = pictures;
-                this.maxPictureId = this.getMaxId();
-                this.pictures.sort((a: Picture, b: Picture) => {
-                    if (a.title === b.title) {
-                        return 0;
-                    }
-                    return a.title > b.title ? 1 : -1;
-                });
-                this.pictureChanged.next(this.pictures.slice());
-            },
-            (error: any) => {
-                console.log(error);
-            }
-        );
-
-        return this.pictures.slice();
+                },
+                error: (e) => console.log(e.document),
+            });
+        return;
     }
 
-    getPicture(index: number) {
-        return this.pictures[index];
+    getPicture(id: string): Picture | null {
+        return this.pictures.find((picture) => picture.id === id);
     }
+
     addPicture(picture: Picture) {
         if (!picture) {
             return;
@@ -79,40 +75,56 @@ export class LibraryService {
             });
 
     }
-    updatePicture(index: number, newPicture: Picture) {
-        if (!this.pictures[index] || !newPicture) {
-          return;
+
+    updatePicture(originalPicture: Picture, newPicture: Picture) {
+        if (!originalPicture || !newPicture) {
+            return;
         }
-        newPicture.id = this.pictures[index].id;
-    
+
+        const pos = this.pictures.findIndex(d => d.id === originalPicture.id);
+
+        if (pos < 0) {
+            return;
+        }
+
+        newPicture.id = originalPicture.id;
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    
-        this.http
-          .put(
-            'http://localhost:3000/final/pictures' + this.pictures[index].id,
-            newPicture,
-            { headers: headers }
-          )
-          .subscribe((response: Response) => {
-            this.pictures[index] = newPicture;
-            this.pictureChanged.next(this.pictures.slice());
-            });
-      }
+        this.http.put('http://localhost:3000/final/picture' + originalPicture.id,
+            newPicture, { headers: headers })
+            .subscribe(
+                (response: Response) => {
+                    this.pictures[pos] = newPicture;
+                    this.sortAndSend();
+                }
+            );
+    }
 
-      deletePicture(index: number) {
-        if (!this.pictures[index]) {
-          return;
+    deletePicture(picture: Picture) {
+        if (!picture) {
+            return;
         }
-        this.http
-          .delete('http://localhost:3000/final/pictures' + this.pictures[index].id)
-          .subscribe((response: Response) => {
-            this.pictures.splice(index, 1);
-            this.pictureChanged.next(this.pictures.slice());
-          });
-      }
 
+        const pos = this.pictures.findIndex(d => d.id === picture.id);
 
+        if (pos < 0) {
+            return;
+        }
 
+        // delete from database
+        this.http.delete('http://localhost:3000/final/picture' + picture.id)
+            .subscribe(
+                (response: Response) => {
+                    this.pictures.splice(pos, 1);
+                    this.sortAndSend();
+                }
+            );
 
+    }
 
+    sortAndSend() {
+        const docList = JSON.stringify(this.pictures)
+        let pictureListClone = this.pictures.slice()
+        this.pictureChanged.next(pictureListClone)
+
+    }
 }

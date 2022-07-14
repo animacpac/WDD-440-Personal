@@ -8,7 +8,7 @@ import { Picture } from '../library-model';
 })
 export class LibraryItemsComponent implements OnInit {
   @Input() picture: Picture;
-  @Input() index: number;
+  
 
   constructor() { }
 
