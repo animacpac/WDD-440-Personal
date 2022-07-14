@@ -1,0 +1,23 @@
+
+<div class="container">
+    <h1>Pictures</h1>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="button-30" (click)="onNewPicture()">New Movie</button>
+      </div>
+    </div>
+    <hr />
+    <div class="row"><a class="shadow">
+
+      <div class="col-xs-12">
+        <app-library-items>
+          *ngFor="let pictureEL of pictures; let i = index"
+          [picture]="pictureEL"
+          [index]="i"
+        ></app-library-items>
+     
+      </div>
+    </a>
+    </div>
+  </div>

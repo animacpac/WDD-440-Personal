@@ -13,12 +13,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ContactComponent } from './contact/contact.component';
-import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
-import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
-import { ContactItemComponent } from './contact/contact-item/contact-item.component';
-import { ContactListComponent } from './contact/contact-list/contact-list.component';
-import { ContactsFilterPipe } from './contact/contacts-filter.pipe';
+import { LibraryComponent } from './library/library.component';
+import { LibraryDetailsComponent } from './library/library-details/library-details.component';
+import { LibraryEditComponent } from './library/library-edit/library-edit.component';
+import { LibraryItemsComponent } from './library/library-items/library-items.component';
+import { LibraryService } from './library/library-service';
+import { LibraryListComponent } from './library/library-list/library-list.component';
 
 
 
@@ -26,10 +26,15 @@ const appRoutes: Routes =[
   { path:'', component: PictureComponent },
   { path:'contact', component: PictureComponent },
   { path:'about', component: AboutComponent},
-  { path: 'picture', component: ContactComponent,children: [
-    { path: 'new', component: ContactEditComponent },
-    { path: ':id', component: ContactDetailComponent },
-    { path: ':id/edit', component: ContactEditComponent }]},
+  {
+    path: 'picture', component: LibraryComponent,
+     children: [
+        { path: 'new', component: LibraryEditComponent },
+        { path: ':id', component: LibraryDetailsComponent },
+        { path: ':id/edit', component: LibraryEditComponent }
+    ]
+}
+  
 
 
 
@@ -40,15 +45,16 @@ const appRoutes: Routes =[
     AppComponent,
     PictureComponent,
     AboutComponent,
-    ContactComponent,
-    ContactDetailComponent,
-    ContactEditComponent,
-    ContactItemComponent,
-    ContactListComponent,
-    ContactsFilterPipe,
+
 
     HeaderComponent,
     FooterComponent,
+    LibraryComponent,
+    LibraryDetailsComponent,
+    LibraryEditComponent,
+    LibraryItemsComponent,
+    LibraryListComponent,
+    
 
   ],
   imports: [
