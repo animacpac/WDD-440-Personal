@@ -1,33 +1,37 @@
-<a class="background">
+<div class="content">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="row">
-        <div class="col-xs-12">
+      <div>
+        <div class="col-xs-12 d-flex justify-content-center">
           <h3>{{picture.title}}</h3>
         </div>
       </div>
+      <div class="panel-body">
+        <div >
+          <div class="col-xs-12 d-flex justify-content-center">
+            <h6><p>{{picture.description}} </p></h6>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12 display-2 d-flex justify-content-center">
           <img [src]="picture.imageUrl" alt="picture of {{picture.title}}" class="img-responsive"
-            style="max-height: 400px;">
+            style="max-height: 700px;">
         </div>
-        <a class="col-md-3" style="margin-top: 50px; margin-left:0px;">
-          <button type="button" class="btn btn-primary" [routerLink]="['edit']">Edit</button>
-          <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
-        </a>
+
       </div>
+      <a class="col-md-12 d-flex justify-content-center" style="margin-top: 50px; margin-left:0px;">
+        
+        <div class="button-30"><button type="button" class="btn btn-primary" [routerLink]="['edit']">Edit</button></div>
+        <div class="button-30"><button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button></div>
+      
+      </a>
 
     </div>
-    <h3>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-xs-12">
-          <h3><p>{{picture.description}} </p></h3>
-        </div>
-      </div>
+    
 
-    </div>
-  </h3>
+ 
 
   </div>
-</a>
+</div>

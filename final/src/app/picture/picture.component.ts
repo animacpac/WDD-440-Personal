@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Picture } from '../library/library-model';
 
 
 @Component({
@@ -7,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./picture.component.css']
 })
 export class PictureComponent implements OnInit {
+  @Input() picture: Picture;
 
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [944, 1020, 984, 990, 1015, 941].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   constructor() { }
 

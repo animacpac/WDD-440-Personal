@@ -294,3 +294,18 @@
       visibility: hidden;
     }
   }
+  footer {
+
+    position: relative;
+    
+    text-align: center;
+    
+    bottom: -80px;
+    
+    
+    
+    font-family: "Cantarell";
+    
+    font-size: 14px;
+    
+    }

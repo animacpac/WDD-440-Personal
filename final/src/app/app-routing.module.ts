@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AboutComponent } from './about/about.component';
+
 import { LibraryDetailsComponent } from './library/library-details/library-details.component';
 import { LibraryEditComponent } from './library/library-edit/library-edit.component';
 import { LibraryListComponent } from './library/library-list/library-list.component';
@@ -12,10 +14,8 @@ const appRoutes: Routes = [
 
     { path:'', component: PictureComponent },
     { path:'contact', component: PictureComponent },
-    { path:'about', component: AboutComponent},
- 
-  
-  
+    { path:'about', component: AboutComponent },
+    
     {
         path: 'picture', component: LibraryComponent,
          children: [
