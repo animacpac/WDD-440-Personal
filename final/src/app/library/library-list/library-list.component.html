@@ -1,9 +1,11 @@
-
 <div class="panel panel-default">
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="row">
-        <span class="title pad-left-right">Pictures</span>
+        <div class="pull-right pad-left-right">
+          <a class="button-30" [routerLink]="['new']">New Picture</a>
+        </div>
+        <hr>
       </div>
       <div class="row">
         <div class="input-group pull-left pad-left-right col-xs-7">
@@ -13,9 +15,7 @@
 
           <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
         </div>
-        <div class="pull-right pad-left-right">
-          <a class="btn btn-success" [routerLink]="['new']">New Picture</a>
-        </div>
+        <b><p></p></b>
       </div>
 
     </div>
@@ -23,11 +23,10 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <app-library-items *ngFor='let pictureEL of pictures|picturesFilter:term'[picture]="pictureEL" dnd-draggable
-        [dragEnabled]="true" [dragData]="pictureEL" [dropZones]="['contactGroup']">
+        <app-library-items *ngFor='let pictureEL of pictures|picturesFilter:term' [picture]="pictureEL" dnd-draggable
+          [dragEnabled]="true" [dragData]="pictureEL" [dropZones]="['contactGroup']">
         </app-library-items>
       </div>
     </div>
   </div>
 </div>
-

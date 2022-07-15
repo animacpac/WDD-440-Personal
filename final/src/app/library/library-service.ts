@@ -20,7 +20,7 @@ export class LibraryService {
         this.pictures = newPictures;
         this.pictureChanged.next(this.pictures.slice())
     }
-    
+
     getMaxId(): number {
         let maxId = 0;
 
@@ -64,7 +64,7 @@ export class LibraryService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         this.http
             .post<{ message: String; picture: Picture }>(
-                'http://localhost:3000/final/pictures',
+                'http://localhost:3000/final/pictures/',
                 picture,
                 { headers: headers }
             )
@@ -80,22 +80,24 @@ export class LibraryService {
         if (!originalPicture || !newPicture) {
             return;
         }
-
-        const pos = this.pictures.findIndex(d => d.id === originalPicture.id);
+        const pos = this.pictures.findIndex(d => d.id === originalPicture.id)
 
         if (pos < 0) {
             return;
         }
 
         newPicture.id = originalPicture.id;
+
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.http.put('http://localhost:3000/final/picture' + originalPicture.id,
-            newPicture, { headers: headers })
-            .subscribe(
-                (response: Response) => {
-                    this.pictures[pos] = newPicture;
-                    this.sortAndSend();
-                }
+
+        this.http
+            .put('http://localhost:3000/final/pictures/' + originalPicture.id, newPicture, {
+                headers: headers,
+            })
+            .subscribe((response: Response) => {
+                this.pictures[pos] = newPicture;
+                this.sortAndSend();
+            }
             );
     }
 
@@ -111,7 +113,7 @@ export class LibraryService {
         }
 
         // delete from database
-        this.http.delete('http://localhost:3000/final/picture' + picture.id)
+        this.http.delete('http://localhost:3000/final/pictures/' + picture.id)
             .subscribe(
                 (response: Response) => {
                     this.pictures.splice(pos, 1);

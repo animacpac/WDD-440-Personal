@@ -4,9 +4,9 @@ export class Picture {
     public description: string;
     public imageUrl: string;
   
-    constructor(id: string, title: string, desc: string, imageUrl: string) {
+    constructor(id: string, title: string, description: string, imageUrl: string) {
       this.id = id;
-      this.description = desc;
+      this.description = description;
       this.imageUrl = imageUrl;
       this.title = title;
     }

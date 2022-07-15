@@ -49,3 +49,23 @@
   box-shadow: lightgray 0 3px 7px inset;
   transform: translateY(2px);
 }
+
+.background{
+  background-color: transparent;
+
+}
+
+.dbody {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  box-shadow: 20px 20px 10px grey;
+
+}
+
+body {
+  padding: 100px;
+
+  background: linear-gradient(steelblue, white);
+}

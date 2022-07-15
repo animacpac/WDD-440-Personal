@@ -31,7 +31,7 @@ export class LibraryDetailsComponent implements OnInit {
   
   onDelete() {
     this.pictureService.deletePicture(this.picture);
-    this.router.navigate(['/pictures']);
+    this.router.navigate(['/picture']);
   }
 
 }

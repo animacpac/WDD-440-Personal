@@ -35,18 +35,10 @@ export class LibraryEditComponent implements OnInit {
     });
   }
 
-  isInvalidPicture(newPicture: Picture) {
-    if (!newPicture) return true;
-    if (this.picture && newPicture.id === this.picture.id) {
-      return true;
-    } 
 
-    return false;
-  }
-
-  onSubmit(form: NgForm) {
-    let value = form.value;
-    let newPicture = new Picture(value.id, value.title, value.description, value.imageUrl);
+  onSubmit(f: NgForm) {
+    let value = f.value;
+    let newPicture = new Picture(value.id,value.title, value.description, value.imageUrl );
 
     if (this.editMode) {
       this.libraryService.updatePicture(this.originalPicture, newPicture);

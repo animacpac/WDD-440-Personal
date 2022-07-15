@@ -1,19 +1,23 @@
 
-<a
+<link rel="stylesheet" href="library-items.component.css">
+<a class="background"><a
 style="cursor: pointer"
 [routerLink]="[picture.id]"
 routerLinkActive="active"
-class="list-group-item clearfix movieDiv"
+class="list-group-item clearfix documentDiv" style="background-color: transparent; border: none;"
 >
-<div class="pull-left">
-  <h4 class="list-group-item-heading">{{ picture.title }}</h4>
-</div>
+
+<a class="dbody">
 <span class="pull-right">
+  <a class="button-30">
   <img
     [src]="picture.imageUrl"
     alt="{{ picture.title }}"
-    class="img-responsive movieImg"
+    class="img-responsive movieImg" style="max-height: 100px; background-color: transparent;max-width: 100px; border: none;" 
   />
+</a>
 </span>
+</a>
+</a>
 </a>
 
